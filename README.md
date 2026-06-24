@@ -5,7 +5,7 @@
 
 A comprehensive **WPF** Cybersecurity Awareness Chatbot with advanced features including persistent Task Management using SQLite.
 
-## ✨ Features
+## Features
 
 - Voice Greeting on startup (`greeting.wav`)
 - Custom ASCII Art displayed in the GUI header
