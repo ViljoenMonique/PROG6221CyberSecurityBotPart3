@@ -18,6 +18,8 @@ A comprehensive **WPF** Cybersecurity Awareness Chatbot with advanced features i
 - Smart command handling (`complete 1`, `delete 2`, etc.)
 
 ## Project Structure
+
+```bash
 CyberSecurityBotPart3/
 ├── Assets/
 │   └── greeting.wav
