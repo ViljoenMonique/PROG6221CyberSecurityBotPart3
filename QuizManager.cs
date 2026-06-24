@@ -1,4 +1,6 @@
-﻿using System;
+//Improved QuizManager with 15 cybersecurity questions and scoring system
+
+using System;
 using System.Collections.Generic;
 
 namespace CyberSecurityBot
