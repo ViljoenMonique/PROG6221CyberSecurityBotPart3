@@ -1,7 +1,9 @@
-name: .NET CI - Cybersecurity Bot Part 3
+name: .NET CI Build - Cybersecurity Bot Part 3
 
 on:
   push:
+    branches: [ main, master ]
+  pull_request:
     branches: [ main, master ]
 
 jobs:
@@ -9,15 +11,16 @@ jobs:
     runs-on: windows-latest
 
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout code
+      uses: actions/checkout@v4
 
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v3
+    - name: Setup .NET 8
+      uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 8.0.x
 
-    - name: Restore
+    - name: Restore dependencies
       run: dotnet restore
 
-    - name: Build
+    - name: Build the project
       run: dotnet build --configuration Release --no-restore
