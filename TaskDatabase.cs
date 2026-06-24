@@ -1,4 +1,5 @@
 //Added TaskDatabase.cs with SQLite integration for persistent task storage
+//Implemented full Task Assistant (Add, View, Complete and Delete tasks) 
 
 using Microsoft.Data.Sqlite;
 using System;
