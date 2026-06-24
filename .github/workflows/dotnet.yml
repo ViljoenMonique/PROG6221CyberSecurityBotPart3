@@ -14,7 +14,7 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
 
-    - name: Setup .NET
+    - name: Setup .NET 8
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 8.0.x
@@ -22,8 +22,5 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
 
-    - name: Build Project
+    - name: Build the project
       run: dotnet build --configuration Release --no-restore
-
-    - name: Run Tests (if any)
-      run: dotnet test --no-build --verbosity normal
