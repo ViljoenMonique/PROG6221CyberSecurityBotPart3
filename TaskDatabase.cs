@@ -1,4 +1,6 @@
-﻿using Microsoft.Data.Sqlite;
+//Added TaskDatabase.cs with SQLite integration for persistent task storage
+
+using Microsoft.Data.Sqlite;
 using System;
 using System.Collections.Generic;
 
