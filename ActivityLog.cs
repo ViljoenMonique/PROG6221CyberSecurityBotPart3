@@ -1,4 +1,6 @@
-﻿using System;
+//Enhanced ActivityLog to properly track all user actions including tasks
+
+using System;
 using System.Collections.Generic;
 
 namespace CyberSecurityBot
