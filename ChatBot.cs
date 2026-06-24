@@ -1,4 +1,6 @@
-﻿using System;
+//Added smarter NLP handling and response priority in Chatbot.cs
+
+using System;
 
 namespace CyberSecurityBot
 {
