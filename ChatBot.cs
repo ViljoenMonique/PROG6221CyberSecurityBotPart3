@@ -1,6 +1,4 @@
-//Added smarter NLP handling and response priority in Chatbot.cs
-
-using System;
+﻿using System;
 
 namespace CyberSecurityBot
 {
@@ -20,6 +18,7 @@ namespace CyberSecurityBot
             string lower = input.ToLower().Trim();
             _activityLog.AddAction($"User: {input}");
 
+            // Exit command
             if (lower == "exit" || lower == "quit" || lower == "close")
                 return "Goodbye! Stay safe online! 👋";
 
@@ -35,17 +34,23 @@ namespace CyberSecurityBot
                 }
             }
 
-            // Special Greeting - Moved higher
-            if (lower.Contains("how are you") || lower.Contains("how r you") || lower == "how are you doing")
+            // Special Greeting
+            if (lower.Contains("how are you") || lower.Contains("how r you") || lower.Contains("how are you doing"))
             {
                 _activityLog.AddAction("Greeting responded");
-                return "I'm doing great, thank you for asking! 😊 I'm here to help you stay safe online. What would you like to do?";
+                return "I'm doing great, thank you! 😊 How can I help you stay safe online?";
             }
 
-            // Task Assistant
-            if (lower.Contains("add task") || lower.Contains("remind") || lower.Contains("set reminder"))
+            // Task Assistant with Reminder Support
+            if (lower.Contains("add task") || lower.Contains("remind me") || lower.Contains("set reminder"))
             {
-                _memory.AddTask(input);
+                string? reminderDate = null;
+                if (lower.Contains("tomorrow"))
+                    reminderDate = DateTime.Now.AddDays(1).ToString("yyyy-MM-dd");
+                else if (lower.Contains("next week"))
+                    reminderDate = DateTime.Now.AddDays(7).ToString("yyyy-MM-dd");
+
+                _memory.AddTask(input, reminderDate);
                 _activityLog.AddAction($"Task added: {input}");
                 return "✅ Task added successfully! Type 'show tasks' to view them.";
             }
@@ -56,20 +61,24 @@ namespace CyberSecurityBot
                 return _memory.GetTasksSummary();
             }
 
-            // Task Management
+            // Task Management Commands
             if (lower.StartsWith("complete ") && int.TryParse(lower.Replace("complete ", "").Trim(), out int completeId))
             {
                 if (_memory.MarkComplete(completeId))
                     return $"✅ Task {completeId} marked as completed!";
+                else
+                    return $"Task {completeId} not found.";
             }
 
             if (lower.StartsWith("delete ") && int.TryParse(lower.Replace("delete ", "").Trim(), out int deleteId))
             {
                 if (_memory.DeleteTask(deleteId))
                     return $"🗑️ Task {deleteId} deleted successfully.";
+                else
+                    return $"Task {deleteId} not found.";
             }
 
-            // Quiz
+            // Quiz Game
             if (lower.Contains("quiz") || lower.Contains("game") || lower.Contains("test me"))
             {
                 _activityLog.AddAction("Quiz started");
@@ -88,7 +97,7 @@ namespace CyberSecurityBot
 
             string greeting = !string.IsNullOrEmpty(_memory.UserName) ? $"{_memory.UserName}, " : "";
 
-            // Keywords
+            // Keyword Responses
             string? keywordReply = _keywords.GetResponse(input);
             if (!string.IsNullOrEmpty(keywordReply))
             {
@@ -96,7 +105,7 @@ namespace CyberSecurityBot
                 return greeting + keywordReply;
             }
 
-            // Sentiment
+            // Sentiment Detection
             string sentimentReply = _sentiment.GetResponse(input);
             if (!string.IsNullOrEmpty(sentimentReply))
             {
@@ -104,9 +113,9 @@ namespace CyberSecurityBot
                 return greeting + sentimentReply;
             }
 
-            // Default
+            // Default Response
             _activityLog.AddAction("Default response");
-            return greeting + "Good question! You can say 'add task', 'show tasks', 'start quiz', 'activity log', or ask me about VPN, phishing, or 2FA.";
+            return greeting + "Good question! You can say 'add task', 'show tasks', 'start quiz', 'activity log', or ask about VPN, phishing, or 2FA.";
         }
 
         private string ExtractName(string input)
@@ -115,7 +124,10 @@ namespace CyberSecurityBot
             if (lower.Contains("my name is")) return input.Substring(lower.IndexOf("my name is") + 10).Trim();
             if (lower.Contains("name is")) return input.Substring(lower.IndexOf("name is") + 8).Trim();
             if (lower.Contains("i am")) return input.Substring(lower.IndexOf("i am") + 4).Trim();
-            if (input.Split(' ').Length <= 3 && input.Length > 2) return input.Trim();
+
+            if (input.Split(' ').Length <= 3 && input.Length > 2)
+                return input.Trim();
+
             return "";
         }
     }
