@@ -9,7 +9,10 @@ namespace CyberSecurityBot
 
         private readonly TaskDatabase _db = new TaskDatabase();
 
-        public void AddTask(string taskDescription) => _db.AddTask(taskDescription);
+        public void AddTask(string taskDescription, string? reminderDate = null)
+        {
+            _db.AddTask(taskDescription, reminderDate);
+        }
 
         public string GetTasksSummary()
         {
