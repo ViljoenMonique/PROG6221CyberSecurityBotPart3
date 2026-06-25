@@ -10,12 +10,12 @@ A comprehensive **WPF** Cybersecurity Awareness Chatbot with advanced features i
 - Voice Greeting on startup (`greeting.wav`)
 - Custom ASCII Art displayed in the GUI header
 - User Name Memory
-- **Task Assistant** with SQLite Database (Add, View, Complete, Delete tasks)
+- **Task Assistant** with SQLite Database (Add, View, Complete, Delete tasks + Reminders)
 - **Cybersecurity Mini Quiz** (15 questions with scoring and feedback)
 - **Activity Log** with timestamps for all user actions
 - Sentiment Detection
 - Keyword Recognition (VPN, Phishing, Passwords, 2FA, etc.)
-- Smart command handling (`complete 1`, `delete 2`, etc.)
+- Smart command handling (`complete 3`, `delete 5`, etc.)
 
 ## Project Structure
 
