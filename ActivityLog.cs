@@ -1,6 +1,4 @@
-//Enhanced ActivityLog to properly track all user actions including tasks
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace CyberSecurityBot
@@ -13,7 +11,7 @@ namespace CyberSecurityBot
         {
             string entry = $"[{DateTime.Now:HH:mm:ss}] {action}";
             _log.Add(entry);
-            if (_log.Count > 25) _log.RemoveAt(0);
+            if (_log.Count > 30) _log.RemoveAt(0);
         }
 
         public string GetLogSummary()
@@ -22,10 +20,15 @@ namespace CyberSecurityBot
                 return "No activities recorded yet.";
 
             string summary = "📜 **Recent Activity Log**\n\n";
-            foreach (var entry in _log)
+            summary += "══════════════════════════════════════\n\n";
+
+            for (int i = _log.Count - 1; i >= 0; i--)
             {
-                summary += entry + "\n";
+                summary += _log[i] + "\n";
             }
+
+            summary += "\n══════════════════════════════════════\n";
+            summary += $"Total actions logged: {_log.Count}";
             return summary;
         }
     }
